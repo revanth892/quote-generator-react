@@ -1,25 +1,29 @@
-import logo from './logo.svg';
-import './App.css';
-
+import React,{useEffect} from 'react';
+import {useState} from 'react';
+import Display from './componets/Display';
+const url="https://api.quotable.io/random";
 function App() {
+  const[data,setData]=useState([]);
+  const getData = async() =>{
+    const response = await fetch(url)
+    const data1= await response.json()
+    setData(data1)
+  }
+  
+  useEffect(()=>{
+    getData();
+  },[])
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-      <h1>Hello world</h1>
+
+    <>
+    <div className='main'>
+      <Display next={data}/>
+      <button className='btn ' onClick={()=>getData()}>Next</button>
     </div>
+    <div className='details'>
+        <p>Made by revanth892(github)</p>
+    </div>
+    </>
   );
 }
 
